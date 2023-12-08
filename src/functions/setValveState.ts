@@ -49,7 +49,7 @@ export async function setValveState(
                         reject({ status: 400, body: err.toString() });
                     }
                     context.log("Twin updated with desired properties");
-                    resolve({ status: 200, body: `Twin updated to status ${status}` });
+                    resolve({ status: 200, body: JSON.stringify({status: status}) });
                 });
             });
         });
@@ -60,7 +60,7 @@ export async function setValveState(
 }
 
 app.http("setValveState", {
-    methods: ["POST"],
+    methods: ["GET", "POST"],
     authLevel: "anonymous",
     handler: setValveState,  // Ensure the handler name matches the function name
 });

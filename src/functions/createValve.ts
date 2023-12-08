@@ -40,7 +40,7 @@ export async function createValve(
 }
 
 app.http("createValve", {
-	methods: ["GET", "POST"],
+	methods: ["POST"],
 	authLevel: "anonymous",
 	handler: createValve,
 });

@@ -31,7 +31,7 @@ export async function getAllValves(
 }
 
 app.http("getAllValves", {
-	methods: ["GET", "POST"],
+	methods: ["GET"],
 	authLevel: "anonymous",
 	handler: getAllValves,
 });

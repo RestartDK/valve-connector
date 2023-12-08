@@ -60,7 +60,7 @@ export async function setValveState(
 }
 
 app.http("setValveState", {
-    methods: ["GET", "POST"],
+    methods: ["POST"],
     authLevel: "anonymous",
     handler: setValveState,  // Ensure the handler name matches the function name
 });

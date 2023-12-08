@@ -5,7 +5,6 @@ import {
 	InvocationContext,
 } from "@azure/functions";
 const Registry = require("azure-iothub").Registry;
-const Message = require('azure-iot-common').Message;
 
 const connectionString = process.env.IOTHUB_CONNECTION_STRING;
 const registry = Registry.fromConnectionString(connectionString);
@@ -44,7 +43,7 @@ export async function getValveState(
 }
 
 app.http('getValveState', {
-    methods: ['GET', 'POST'],
+    methods: ['GET'],
     authLevel: 'anonymous',
     handler: getValveState
 });

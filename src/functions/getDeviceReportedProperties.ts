@@ -9,7 +9,7 @@ const Registry = require("azure-iothub").Registry;
 const connectionString = process.env.IOTHUB_CONNECTION_STRING;
 const registry = Registry.fromConnectionString(connectionString);
 
-export async function getValveState(
+export async function getDeviceReportedProperties(
 	request: HttpRequest,
 	context: InvocationContext
 ): Promise<HttpResponseInit> {
@@ -29,9 +29,7 @@ export async function getValveState(
                 } else {
                     const reportedProperties = twin.properties.reported;
                     context.log("reportedProperties: " + JSON.stringify(reportedProperties));
-
-                    const status = reportedProperties.status; // Extract the status property from the reported properties
-                    resolve({ status: 200, body: JSON.stringify({ status }) });
+                    resolve({ status: 200, body: JSON.stringify({ reportedProperties }) });
                 }
             });
         });
@@ -41,8 +39,8 @@ export async function getValveState(
 	}
 }
 
-app.http('getValveState', {
+app.http('getDeviceReportedProperties', {
     methods: ['GET'],
     authLevel: 'anonymous',
-    handler: getValveState
+    handler: getDeviceReportedProperties
 });

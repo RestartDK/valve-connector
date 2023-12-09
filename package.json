@@ -11,7 +11,9 @@
     "test": "echo \"No tests yet...\""
   },
   "dependencies": {
+    "@azure/arm-containerinstance": "^9.1.0",
     "@azure/functions": "^4.0.0",
+    "@azure/identity": "^4.0.0",
     "@types/tunnel": "^0.0.6",
     "azure-iot-common": "^1.13.2",
     "azure-iot-device": "^1.18.3",

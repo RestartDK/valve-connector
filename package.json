@@ -18,7 +18,8 @@
     "@types/tunnel": "^0.0.6",
     "azure-iot-common": "^1.13.2",
     "azure-iot-device": "^1.18.3",
-    "azure-iothub": "^1.16.4"
+    "azure-iothub": "^1.16.4",
+    "luxon": "^3.4.4"
   },
   "devDependencies": {
     "@types/node": "^18.x",

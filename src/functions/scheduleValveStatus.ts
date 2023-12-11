@@ -12,15 +12,18 @@ export async function scheduleValveStatus(request: HttpRequest, context: Invocat
             return { status: 400, body: "Missing targetTime, deviceId, or status" };
         }
 
-        // Parse the target time using Luxon
-        const targetTime = DateTime.fromISO(targetTimeString, { zone: 'local' });
+        // Parse the target time as UTC using Luxon
+        const targetTime = DateTime.fromISO(targetTimeString, { zone: 'utc' });
 
         if (!targetTime.isValid) {
             return { status: 400, body: "Invalid targetTime" };
         }
 
-        const currentTime = DateTime.local();
-        const delayInSeconds = Math.round(targetTime.diff(currentTime, 'seconds').seconds);
+        // Current time in UTC
+        const currentTime = DateTime.utc();
+
+        // Calculate the delay in seconds
+        const delayInSeconds = Math.round(targetTime.diff(currentTime, 'seconds').seconds); 
 
         if (delayInSeconds > 0) {
             const queueServiceClient = QueueServiceClient.fromConnectionString(process.env.AzureWebJobsStorage);
@@ -28,7 +31,7 @@ export async function scheduleValveStatus(request: HttpRequest, context: Invocat
             const messageContent = JSON.stringify({ deviceId, status });
             await queueClient.sendMessage(Buffer.from(messageContent).toString('base64'), { visibilityTimeout: delayInSeconds });
 
-            return { status: 200, body: "Function scheduled" };
+            return { status: 200, body: `Function scheduled for Target Time: ${targetTimeString}` };
         } else {
             return { status: 400, body: "Target time is in the past" };
         }
